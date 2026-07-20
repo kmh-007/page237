@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BookOpen, PlusCircle, LayoutDashboard, User, LogOut, Menu, BookOpenCheck } from 'lucide-react'
+import { BookOpen, PlusCircle, LayoutDashboard, User, LogOut, Menu, BookOpenCheck, ShieldCheck } from 'lucide-react'
 import styles from './Navbar.module.css'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import MobileDrawer from '../MobileDrawer/MobileDrawer'
@@ -13,9 +13,10 @@ interface NavbarClientProps {
   isLoggedIn: boolean
   userEmail: string | null
   userRole: string | null
+  isAdmin: boolean
 }
 
-export default function NavbarClient({ isLoggedIn, userEmail, userRole }: NavbarClientProps) {
+export default function NavbarClient({ isLoggedIn, userEmail, userRole, isAdmin }: NavbarClientProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const pathname = usePathname()
 
@@ -59,6 +60,16 @@ export default function NavbarClient({ isLoggedIn, userEmail, userRole }: Navbar
                 Dashboard
               </Link>
             </>
+          )}
+
+          {isLoggedIn && isAdmin && (
+            <Link 
+              href="/admin" 
+              className={`${styles.navLink} ${pathname === '/admin' ? styles.activeLink : ''}`}
+            >
+              <ShieldCheck size={16} />
+              Admin
+            </Link>
           )}
         </nav>
 
@@ -110,6 +121,7 @@ export default function NavbarClient({ isLoggedIn, userEmail, userRole }: Navbar
         onClose={() => setIsDrawerOpen(false)} 
         isLoggedIn={isLoggedIn}
         userRole={userRole || undefined}
+        isAdmin={isAdmin}
         onSignOut={handleSignOut}
       />
     </header>

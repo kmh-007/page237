@@ -42,8 +42,7 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
       *,
       seller:profiles(full_name, role, created_at),
       section:sections(name),
-      class:classes(name),
-      subject:subjects(name)
+      class:classes(name)
     `)
     .eq('id', id)
     .single()
@@ -55,7 +54,17 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
   const seller = listing.seller as any
   const section = listing.section as any
   const classItem = listing.class as any
-  const subject = listing.subject as any
+
+  const { data: subjectData } = await supabase
+    .from('subjects')
+    .select('name, active')
+    .eq('id', listing.subject_id)
+    .single()
+
+  const subject = subjectData as any
+  const isSubjectActive = (value: any) =>
+    value === true || value === 'true' || value === 't' || value === '1'
+  const showSubject = Boolean(subject?.name) && isSubjectActive(subject?.active)
 
   const memberSince = seller?.created_at
     ? new Date(seller.created_at).toLocaleDateString('en-US', {
@@ -97,10 +106,12 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
               <span className={styles.tagLabel}>Class</span>
               <span className={styles.tagValue}>{classItem?.name}</span>
             </div>
-            <div className={styles.tagItem}>
-              <span className={styles.tagLabel}>Subject</span>
-              <span className={styles.tagValue}>{subject?.name}</span>
-            </div>
+            {showSubject && (
+              <div className={styles.tagItem}>
+                <span className={styles.tagLabel}>Subject</span>
+                <span className={styles.tagValue}>{subject?.name}</span>
+              </div>
+            )}
             <div className={styles.tagItem}>
               <span className={styles.tagLabel}>Condition</span>
               <span className={styles.tagValue} style={{ textTransform: 'capitalize' }}>

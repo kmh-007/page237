@@ -5,6 +5,7 @@ export default async function Navbar() {
   let isLoggedIn = false
   let userEmail: string | null = null
   let userRole: string | null = null
+  let isAdmin = false
 
   try {
     if (isSupabaseConfigured()) {
@@ -16,16 +17,15 @@ export default async function Navbar() {
         userEmail = user.email || null
         userRole = user.user_metadata?.role || null
 
-        if (!userRole) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('user_id', user.id)
-            .single()
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role, is_admin')
+          .eq('user_id', user.id)
+          .single()
 
-          if (profile) {
-            userRole = profile.role
-          }
+        if (profile) {
+          userRole = profile.role
+          isAdmin = Boolean(profile.is_admin)
         }
       }
     }
@@ -38,6 +38,7 @@ export default async function Navbar() {
       isLoggedIn={isLoggedIn} 
       userEmail={userEmail} 
       userRole={userRole} 
+      isAdmin={isAdmin} 
     />
   )
 }

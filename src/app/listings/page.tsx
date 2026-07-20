@@ -38,6 +38,7 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
   const sections = sectionsRes.data || []
   const classes = classesRes.data || []
   const subjects = subjectsRes.data || []
+  const activeSubjectIds = subjects.map((item) => item.id)
 
   // 2. Build database query for available listings
   let query = supabase
@@ -51,6 +52,12 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
     .eq('status', 'available')
 
   // Apply filters
+  if (activeSubjectIds.length > 0) {
+    query = query.not('subject_id', 'is', null).in('subject_id', activeSubjectIds)
+  } else {
+    query = query.eq('id', '00000000-0000-0000-0000-000000000000')
+  }
+
   if (search) {
     query = query.or(`title.ilike.%${search}%,author.ilike.%${search}%`)
   }

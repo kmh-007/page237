@@ -21,7 +21,7 @@ export default async function RootLayout({
     <html lang="en" data-theme={theme}>
       <body>
         <Navbar />
-        <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <main style={{ flex: 1, display: "flex", flexDirection: "column", paddingTop: "70px" }}>
           {children}
         </main>
       </body>

@@ -38,7 +38,7 @@ export default async function DashboardPage() {
       *,
       section:sections(name),
       class:classes(name),
-      subject:subjects(name)
+      subject:subjects!subject_id(name, active)
     `)
     .eq('seller_id', profile.id)
     .neq('status', 'removed')
@@ -137,7 +137,13 @@ export default async function DashboardPage() {
                 <div className={styles.details}>
                   <span className={styles.badge}>{(listing.section as any)?.name}</span>
                   <span className={styles.badge}>{(listing.class as any)?.name}</span>
-                  <span className={styles.badge}>{(listing.subject as any)?.name}</span>
+                  {(() => {
+                    const subject = Array.isArray(listing.subject) ? listing.subject[0] : listing.subject
+                    const isSubjectActive = (value: any) =>
+                      value === true || value === 'true' || value === 't' || value === '1'
+                    const showSubject = Boolean(subject?.name) && isSubjectActive(subject?.active)
+                    return showSubject ? <span className={styles.badge}>{subject?.name}</span> : null
+                  })()}
                   <span className={styles.badge} style={{ textTransform: 'capitalize' }}>{listing.condition}</span>
                 </div>
 

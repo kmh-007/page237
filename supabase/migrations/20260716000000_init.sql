@@ -426,3 +426,11 @@ USING (
 
 -- Admin: full access via service_role key already bypasses RLS,
 -- no additional policy needed for the admin app.
+
+-- Making images public for every to see
+DROP POLICY IF EXISTS "listing_images_select_public" ON storage.objects;
+
+-- Setting my account as admin
+UPDATE profiles
+SET is_admin = TRUE
+WHERE email = 'your-actual-signup-email@example.com';

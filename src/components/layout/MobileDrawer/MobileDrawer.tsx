@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { X, BookOpen, PlusCircle, LayoutDashboard, User, LogOut, LogIn, UserPlus } from 'lucide-react'
+import { X, BookOpen, PlusCircle, LayoutDashboard, User, LogOut, LogIn, UserPlus, ShieldCheck } from 'lucide-react'
 import styles from './MobileDrawer.module.css'
 
 interface MobileDrawerProps {
@@ -10,10 +10,11 @@ interface MobileDrawerProps {
   onClose: () => void
   isLoggedIn: boolean
   userRole?: string
+  isAdmin: boolean
   onSignOut: () => Promise<void>
 }
 
-export default function MobileDrawer({ isOpen, onClose, isLoggedIn, userRole, onSignOut }: MobileDrawerProps) {
+export default function MobileDrawer({ isOpen, onClose, isLoggedIn, userRole, isAdmin, onSignOut }: MobileDrawerProps) {
   const pathname = usePathname()
 
   const handleLinkClick = () => {
@@ -70,6 +71,16 @@ export default function MobileDrawer({ isOpen, onClose, isLoggedIn, userRole, on
                     Seller Dashboard
                   </Link>
                 </>
+              )}
+              {isAdmin && (
+                <Link 
+                  href="/admin" 
+                  className={`${styles.navLink} ${pathname === '/admin' ? styles.activeLink : ''}`}
+                  onClick={handleLinkClick}
+                >
+                  <ShieldCheck size={18} />
+                  Admin
+                </Link>
               )}
               <Link 
                 href="/profile" 
