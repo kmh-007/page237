@@ -27,6 +27,7 @@ export default async function RootLayout({
         <main style={{ flex: 1, display: "flex", flexDirection: "column", paddingTop: "70px" }}>
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

@@ -7,17 +7,29 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={`${styles.footerContainer} container`}>
-        <div className={styles.logo}>
-          Page<span className={styles.logoAccent}>237</span>
+        <div className={styles.column}>
+          <div className={styles.logo}>
+            Page<span className={styles.logoAccent}>237</span>
+          </div>
+          <p className={styles.subtitle}>
+            Buy, sell, and discover second-hand books, notes, and pamphlets across Cameroon.
+          </p>
         </div>
-        <nav className={styles.links}>
-          <Link href="/listings" className={styles.link}>Browse</Link>
-          <Link href="/dashboard" className={styles.link}>Dashboard</Link>
-          <Link href="/profile" className={styles.link}>Profile</Link>
-          <a href="https://wa.me/237670000000" target="_blank" rel="noopener noreferrer" className={styles.link}>Support</a>
-        </nav>
-        <div className={styles.copyright}>
-          &copy; {currentYear} Page237. All rights reserved.
+
+        <div className={styles.column}>
+          <div className={styles.heading}>Quick links</div>
+          <nav className={styles.links}>
+            <Link href="/listings" className={styles.link}>Browse books</Link>
+            <Link href="/dashboard" className={styles.link}>Seller dashboard</Link>
+            <Link href="/profile" className={styles.link}>Your profile</Link>
+          </nav>
+        </div>
+
+        <div className={styles.column}>
+          <div className={styles.heading}>Support</div>
+          <p className={styles.linkText}>help@page237.cm</p>
+          <p className={styles.linkText}>WhatsApp: +237 670 000 000</p>
+          <p className={styles.copyText}>&copy; {currentYear} Page237. All rights reserved.</p>
         </div>
       </div>
     </footer>
