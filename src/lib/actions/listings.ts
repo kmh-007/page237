@@ -42,7 +42,7 @@ export async function createListing(values: ListingFormValues) {
   // Validate fields
   const validation = ListingSchema.safeParse(values)
   if (!validation.success) {
-    return { error: validation.error.errors[0].message }
+    return { error: validation.error.issues[0].message }
   }
 
   const supabase = await createClient()
@@ -85,7 +85,7 @@ export async function updateListing(listingId: string, values: ListingFormValues
   // Validate fields
   const validation = ListingSchema.safeParse(values)
   if (!validation.success) {
-    return { error: validation.error.errors[0].message }
+    return { error: validation.error.issues[0].message }
   }
 
   const supabase = await createClient()

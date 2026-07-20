@@ -33,8 +33,8 @@ export const SignupSchema = z.object({
     .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
     .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
     .regex(/[0-9]/, 'Password must contain at least one number'),
-  role: z.enum(['buyer', 'seller'], {
-    required_error: 'Please select whether you are a buyer or a seller',
+  role: z.enum(['buyer', 'seller']).refine((value) => value === 'buyer' || value === 'seller', {
+    message: 'Please select whether you are a buyer or a seller',
   }),
 })
 

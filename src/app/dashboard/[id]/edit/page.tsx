@@ -2,7 +2,7 @@ import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { updateListing } from '@/lib/actions/listings'
 import ListingForm from '@/components/forms/ListingForm/ListingForm'
-import styles from '../new/page.module.css'
+import styles from '../../new/page.module.css'
 
 interface EditListingPageProps {
   params: Promise<{ id: string }>

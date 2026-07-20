@@ -27,7 +27,7 @@ export async function contactSeller(
   // 3. Validate message length
   const validation = ContactSchema.safeParse({ message })
   if (!validation.success) {
-    return { error: validation.error.errors[0].message }
+    return { error: validation.error.issues[0].message }
   }
 
   // 4. Fetch seller WhatsApp number

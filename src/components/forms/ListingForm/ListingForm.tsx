@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, type Resolver } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Upload, X, AlertCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
@@ -54,6 +54,8 @@ export default function ListingForm({
   const [error, setError] = useState<string | null>(null)
   const [uploadedImages, setUploadedImages] = useState<string[]>(initialData?.image_urls || [])
 
+  const resolver = zodResolver(ListingSchema) as unknown as Resolver<ListingFormValues>
+
   const {
     register,
     handleSubmit,
@@ -61,7 +63,7 @@ export default function ListingForm({
     watch,
     formState: { errors, isSubmitting },
   } = useForm<ListingFormValues>({
-    resolver: zodResolver(ListingSchema),
+    resolver,
     defaultValues: {
       title: initialData?.title || '',
       author: initialData?.author || '',

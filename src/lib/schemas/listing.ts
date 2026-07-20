@@ -15,13 +15,12 @@ export const ListingSchema = z.object({
   price: z.preprocess(
     (val) => (val === '' ? undefined : Number(val)),
     z.number({
-      required_error: 'Price is required',
-      invalid_type_error: 'Price must be a number',
+      message: 'Price must be a number',
     })
       .min(0, 'Price must be 0 or greater')
   ),
-  condition: z.enum(['new', 'good', 'fair', 'worn'], {
-    error_map: () => ({ message: 'Please select a book condition' }),
+  condition: z.enum(['new', 'good', 'fair', 'worn']).refine((value) => ['new', 'good', 'fair', 'worn'].includes(value), {
+    message: 'Please select a book condition',
   }),
   sectionId: z.string().uuid('Please select a valid section'),
   classId: z.string().uuid('Please select a valid class'),

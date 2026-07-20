@@ -32,7 +32,7 @@ export async function signUp(prevState: any, formData: FormData) {
 
   if (!validation.success) {
     return {
-      error: validation.error.errors[0].message,
+      error: validation.error.issues[0].message,
     }
   }
 
@@ -66,7 +66,7 @@ export async function signIn(prevState: any, formData: FormData) {
   const validation = LoginSchema.safeParse({ email, password })
 
   if (!validation.success) {
-    return { error: validation.error.errors[0].message }
+    return { error: validation.error.issues[0].message }
   }
 
   const supabase = await createClient()
@@ -97,7 +97,7 @@ export async function requestPasswordReset(prevState: any, formData: FormData) {
   const validation = ForgotPasswordSchema.safeParse({ email })
 
   if (!validation.success) {
-    return { error: validation.error.errors[0].message }
+    return { error: validation.error.issues[0].message }
   }
 
   const supabase = await createClient()
@@ -119,7 +119,7 @@ export async function updatePassword(prevState: any, formData: FormData) {
   const validation = ResetPasswordSchema.safeParse({ password })
 
   if (!validation.success) {
-    return { error: validation.error.errors[0].message }
+    return { error: validation.error.issues[0].message }
   }
 
   const supabase = await createClient()

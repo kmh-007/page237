@@ -26,7 +26,7 @@ export async function reportListing(
   // 3. Validate reason
   const validation = ReportSchema.safeParse({ reason })
   if (!validation.success) {
-    return { error: validation.error.errors[0].message }
+    return { error: validation.error.issues[0].message }
   }
 
   // 4. Get reporter's profile ID

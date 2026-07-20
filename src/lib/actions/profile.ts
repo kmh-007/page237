@@ -37,7 +37,7 @@ export async function updateProfile(values: { fullName: string; whatsappNumber: 
   // 2. Validate inputs
   const validation = ProfileUpdateSchema.safeParse(values)
   if (!validation.success) {
-    return { error: validation.error.errors[0].message }
+    return { error: validation.error.issues[0].message }
   }
 
   // 3. Update profiles table
