@@ -7,6 +7,9 @@ import Footer from "@/components/layout/Footer/Footer";
 export const metadata: Metadata = {
   title: "Page237 — Second-Hand Book & Pamphlet Marketplace",
   description: "Browse, search, and filter second-hand textbooks, class notes, and pamphlets in Cameroon. Contact sellers directly via WhatsApp.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default async function RootLayout({
